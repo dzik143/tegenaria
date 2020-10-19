@@ -14,7 +14,7 @@
     - [LibLock](Source/Core/LibLock) - OS independent **SYNCHRONIZATION** ([mutexes](https://en.wikipedia.org/wiki/Lock_(computer_science)) and [semaphores](https://en.wikipedia.org/wiki/Semaphore_(programming))),
     - [LibObject](Source/Core/LibObject) - base C++ object scheme with thread-safe **REFERENCE COUNTER**,
     - [LibProcess](Source/Core/LibProcess) - OS independent **PROCESS** management (create, wait, kill, etc.),
-    - [LibReg](Source/Core/LibProcess) - high-level [WINDOWS REGISTRY](https://en.wikipedia.org/wiki/Windows_Registry) management (Windows only),
+    - [LibReg](Source/Core/LibReg) - high-level [WINDOWS REGISTRY](https://en.wikipedia.org/wiki/Windows_Registry) management (Windows only),
     - [LibService](Source/Core/LibService) - high-level routines to manage [WINDOWS SERVICES](https://docs.microsoft.com/en-us/dotnet/framework/windows-services/introduction-to-windows-service-applications),
     - [LibSSMap](Source/Core/LibSSMap) - String-to-String dictionary class, often used to read/write **CONFIGURATION FILES**,
     - [LibStr](Source/Core/LibStr) - **STRING** and **RAW BUFFER** helpers,
