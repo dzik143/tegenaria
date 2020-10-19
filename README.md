@@ -2,24 +2,6 @@
 - Set of C++ libraries,
 - Should works on Windows 32/64, Linux and MacOS,
 - MIT license - use for any purpose (including commercial).
-
-# Build (Windows 32/64)
-  1. Install [MinGW](http://www.mingw.org/)
-  2. Get [qcbuild tool](Source/Tools/QCBuild/Prebuild/Win32)
-  3. Go to main Tegenaria project root in cmd shell.
-  4. Execute commands:
-  ```
-  qcbuild
-  Build.bat
-  ```
-# Build (Linux)
-  1. Go to main Tegenaria project root in terminal.
-  2. Get [qcbuild tool](Source/Tools/QCBuild/Prebuild/Linux)
-  3. Execute commands:
-  ```
-  ./qcbuild
-  ./Build.sh
-  ```
   
 # Overview
   - Core:
@@ -46,3 +28,21 @@
     - [LibNetEx](Source/Net/LibNetEx) - high-level network related functions,
     - [LibSecure](Source/Net/LibSecure) - **SECURITY** related ([SSL/TLS](https://pl.wikipedia.org/wiki/Transport_Layer_Security), encryption, random numbers), needs [OpenSSL](https://www.openssl.org/) to work,
     - [LibSftp](Source/Net/LibSftp) - OS independent [SFPT client](https://pl.wikipedia.org/wiki/SSH_File_Transfer_Protocol) library.
+
+# Build (Windows 32/64)
+  1. Install [MinGW](http://www.mingw.org/)
+  2. Get [qcbuild tool](Source/Tools/QCBuild/Prebuild/Win32)
+  3. Go to main Tegenaria project root in cmd shell.
+  4. Execute commands:
+  ```
+  qcbuild
+  Build.bat
+  ```
+# Build (Linux)
+  1. Go to main Tegenaria project root in terminal.
+  2. Get [qcbuild tool](Source/Tools/QCBuild/Prebuild/Linux)
+  3. Execute commands:
+  ```
+  ./qcbuild
+  ./Build.sh
+  ```
