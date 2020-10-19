@@ -42,7 +42,7 @@
               
   - Net:
     - [LibCGI](Source/Net/LibCGI) - C++ wrappers for [Common Gateway Interface](https://pl.wikipedia.org/wiki/Common_Gateway_Interface) (CGI) interface,
-    - [LibCGI](Source/Net/LibNet) - middle-level **NETWORK** related functions (TCP client, thread callback-based server, [epool](https://en.wikipedia.org/wiki/Epoll), [IO Completion Ports](https://docs.microsoft.com/en-us/windows/win32/fileio/i-o-completion-ports)),
+    - [LibNet](Source/Net/LibNet) - middle-level **NETWORK** related functions (TCP client, callback-based TCP server, [epool](https://en.wikipedia.org/wiki/Epoll), [IO Completion Ports](https://docs.microsoft.com/en-us/windows/win32/fileio/i-o-completion-ports), [SMTP client](https://pl.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol)),
     - [LibNetEx](Source/Net/LibNetEx) - high-level network related functions,
     - [LibSecure](Source/Net/LibSecure) - **SECURITY** related ([SSL/TLS](https://pl.wikipedia.org/wiki/Transport_Layer_Security), encryption, random numbers), needs [OpenSSL](https://www.openssl.org/) to work,
-    - [LibSftp](Source/Net/LibSftp) - OS independent [SFPT](https://pl.wikipedia.org/wiki/SSH_File_Transfer_Protocol) client library.
+    - [LibSftp](Source/Net/LibSftp) - OS independent [SFPT client](https://pl.wikipedia.org/wiki/SSH_File_Transfer_Protocol) library.
