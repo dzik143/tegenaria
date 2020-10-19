@@ -1,0 +1,73 @@
+################################################################################
+#                                                                              #
+#  Copyright (c) 2010, 2014 Sylwester Wysocki <sw143@wp.pl>                    #
+#                                                                              #
+#  LibLock, LibProcess, LibThread:                                             #
+#    Copyright (c) 2010, 2014 Lukasz Bienczyk <lukasz.bienczyk@gmail.com>,     #
+#    Radoslaw Kolodziejczyk <radek.kolodziejczyk@gmail.com>,                   #
+#    Sylwester Wysocki <sw143@wp.pl>                                           #
+#                                                                              #
+#  Permission is hereby granted, free of charge, to any person obtaining a     #
+#  copy of this software and associated documentation files (the "Software"),  #
+#  to deal in the Software without restriction, including without limitation   #
+#  the rights to use, copy, modify, merge, publish, distribute, sublicense,    #
+#  and/or sell copies of the Software, and to permit persons to whom the       #
+#  Software is furnished to do so, subject to the following conditions:        #
+#                                                                              #
+#  The above copyright notice and this permission notice shall be included in  #
+#  all copies or substantial portions of the Software.                         #
+#                                                                              #
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR  #
+#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,    #
+#  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL     #
+#  THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER  #
+#  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING     #
+#  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER         #
+#  DEALINGS IN THE SOFTWARE.                                                   #
+#                                                                              #
+################################################################################
+
+#
+# Libs project's root.
+#
+
+TYPE    = PROJECT
+TITLE   = Tegenaria
+INCLUDE =
+LIBS    =
+
+#
+# Enable compilation of DBG_XXX code.
+#
+
+# DEFINES = -DDEBUG -DDEBUG_STATE
+
+#
+# Add default copyright and license.
+# If needed, can be overwritten in selected component.
+#
+
+COPYRIGHT = (C) Sylwester Wysocki 2010, 2014
+LICENSE   = MIT (See LICENSE.txt file)
+VERSION   = 0.5
+
+#
+# Linux specified.
+# Add -lpthread to every components.
+#
+
+.section MinGW
+ LIBS += -Wno-deprecated -lws2_32 -lnetapi32 -lgdi32 -lwinspool
+ LIBS += -luserenv -lshlwapi -lole32 -lstdc++ -lWtsapi32
+.endsection
+
+.section Linux
+  LIBS  += -lpthread -lrt
+.endsection
+
+#
+# Auto-documentation flags.
+#
+
+AUTODOC_PRIVATE_DIRS  = Source/Import Source/Tools
+AUTODOC_SKIP_EXAMPLES = 1

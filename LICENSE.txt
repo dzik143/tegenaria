@@ -1,6 +1,11 @@
 MIT License
 
-Copyright (c) 2020 Sylwester Wysocki
+Copyright (c) 2010, 2014 Sylwester Wysocki <sw143@wp.pl>
+
+LibLock, LibProcess, LibThread:
+  Copyright (c) 2010, 2014 Lukasz Bienczyk <lukasz.bienczyk@gmail.com>,
+  Radoslaw Kolodziejczyk <radek.kolodziejczyk@gmail.com>,
+  Sylwester Wysocki <sw143@wp.pl>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

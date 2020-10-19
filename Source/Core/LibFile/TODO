@@ -1,0 +1,1 @@
+= Change tfwrite() like macros into pure functions to hide implementation.

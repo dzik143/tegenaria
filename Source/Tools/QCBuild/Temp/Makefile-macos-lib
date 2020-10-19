@@ -1,0 +1,102 @@
+
+#
+# DO NOT EDIT! This file was generated automatically from 'qcbuild.src' file.
+#
+
+TITLE       = error
+ROOT        = ./../..
+INSTALL     = 
+BUILD       = $(ROOT)/Build
+BUILD_BIN   = $(ROOT)/Build/Bin
+BUILD_LIB   = $(ROOT)/Build/Lib
+BUILD_INC   = $(ROOT)/Build/Include
+INSTALL_BIN = 
+INSTALL_LIB = 
+INSTALL_INC = 
+
+#
+# Source lists.
+#
+
+CSRC           = 
+CXXSRC         = $(QT_MOC) Error.cpp
+ISRC           = Error.h
+PREBUILD_LIBS  = 
+PREBUILD_PROGS = 
+DEFINES        = -DDEBUG -DDEBUG_STATE -DDLVERSION=\"0.6\"
+EXE_POSTFIX    = 
+DLL_POSTFIX    = .dylib
+DLL_PREFIX     = lib
+CXXOBJ         = $(CXXSRC:.cpp=.o)
+COBJ           = $(CSRC:.c=.o)
+OBJ            = $(CXXOBJ) $(COBJ)
+
+
+#
+# Compiler/linker flags.
+#
+
+CXX     = g++
+CC      = gcc
+CXXFLAGS= -c -g -O3 -fPIC -L $(BUILD_LIB) -I $(BUILD_INC) $(DEFINES)
+CFLAGS  = -c -g -O3 -fPIC -L $(BUILD_LIB) -I $(BUILD_INC) $(DEFINES)
+LIBS    = -lpthread -ldl -stdlib=libc++ -L $(BUILD_LIB)
+INCLUDE =  -I $(BUILD_INC)
+LFLAGS  = -mmacosx-version-min=10.7
+ARCH    = x86_64
+
+#
+# Link objects to executable/library.
+#
+
+all: $(OBJ)
+
+#
+# Compile sources to objects.
+#
+
+$(CXXOBJ) : %.o : %.cpp
+	@echo Compiling $<...
+	@$(CXX) $(CXXFLAGS) $(INCLUDE) -c $< -o $@
+
+$(COBJ) : %.o : %.c
+	@echo Compiling $<...
+	@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+
+#
+# Make install. Copy created binaries to build dir.
+#
+
+install: all
+	mkdir -p $(BUILD)
+	mkdir -p $(BUILD_INC)
+	mkdir -p $(BUILD_LIB)
+	mkdir -p $(BUILD_BIN)
+	cp -rp $(ISRC) $(BUILD_INC)
+	@echo Linking static lib$(TITLE)-static.a...
+	rm -f $(TITLE)-static.a
+	ar rcs lib$(TITLE)-static.a $(OBJ)
+	@echo Linking $(TITLE)$(DLL_POSTFIX)...
+	$(CXX) -shared $(LFLAGS) -o $(DLL_PREFIX)$(TITLE)$(DLL_POSTFIX) $(OBJ) $(LIBS)
+	cp -rp $(DLL_PREFIX)$(TITLE)$(DLL_POSTFIX) $(BUILD_LIB)
+	cp -rp lib$(TITLE)-static.a $(BUILD_LIB)
+
+#
+# Make clean. Remove files created by make and make install.
+#
+
+clean:
+	rm -f *.o
+	rm -f *.log
+	rm -f *$(DLL_POSTFIX)
+	rm -f *.a
+	rm -f *.def
+
+#
+# Make distclean. Make clean + clean Makefile.
+#
+
+distclean: clean
+	rm -f Makefile
+
+.PHONY: install clean distclean

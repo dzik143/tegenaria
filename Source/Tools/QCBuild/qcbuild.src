@@ -1,0 +1,192 @@
+################################################################################
+#                                                                              #
+#  Copyright (c) 2010, 2014 Sylwester Wysocki <sw143@wp.pl>                    #
+#                                                                              #
+#  Permission is hereby granted, free of charge, to any person obtaining a     #
+#  copy of this software and associated documentation files (the "Software"),  #
+#  to deal in the Software without restriction, including without limitation   #
+#  the rights to use, copy, modify, merge, publish, distribute, sublicense,    #
+#  and/or sell copies of the Software, and to permit persons to whom the       #
+#  Software is furnished to do so, subject to the following conditions:        #
+#                                                                              #
+#  The above copyright notice and this permission notice shall be included in  #
+#  all copies or substantial portions of the Software.                         #
+#                                                                              #
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR  #
+#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,    #
+#  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL     #
+#  THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER  #
+#  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING     #
+#  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER         #
+#  DEALINGS IN THE SOFTWARE.                                                   #
+#                                                                              #
+################################################################################
+
+#
+# Component's type. MUST set. Possible types are:
+#
+# PROJECT        - Root component of project. All components will inherit
+#                  compilation flags, defines etc. from it recursiely
+#                  (see below).
+#
+# SIMPLE_PROGRAM - Stand alone executable ('exe') without whole project stuff.
+#                  This means simply one component project.
+#
+# SIMPLE_LIBRARY - Stand alone library ('dll') without whole project stuff.
+#                  This means simply one component project.
+#
+# PROGRAM        - Executable ('exe'), which is part of bigger project.
+#                  Definition of root component (in qcbuild.src) MUST exists
+#                  in parent (grandparnet, grandgrandparent etc) directory.
+#
+# LIBRARY        - Library ('dll'), which is part of bigger project.
+#                  Definition of root component (in qcbuild.src) MUST exists
+#                  in parent (grandparnet, grandgrandparent etc) directory.
+#
+
+TYPE = PROGRAM
+
+#
+# Title of component. SHOULD set.
+# If skipped 'Untitled' will be used instead.
+#
+
+TITLE = qcbuild
+
+#
+# List of sources files.
+# MUST be set if any sources to build.
+# If only prebuild, it MUST be skipped. OPTIONAL.
+#
+
+CXXSRC  = Main.cpp Utils.cpp SourceInfo.cpp SVG.cpp Diagram.cpp
+CXXSRC += Scan.cpp AutoDoc.cpp
+
+#
+# Header files exported by component to others. OPTIONAL.
+#
+
+ISRC =
+
+#
+# List of prebuild programs (exes) and libraries.
+#
+# PREBUILD_PROGS will be copied into Build/Bin
+# PREBUILD_LIBS will be copied into Build/Lib
+#
+# $(ARCH) keyword in filenames will be replaced by i386 or amd64
+# while makefile created.
+#
+# Example:
+# PREBUILD_LIBS = Prebuild/$(ARCH)/driver.sys will become:
+#
+# 'Prebuild/i386/driver.sys' on IA32 target,
+# 'Prebuild/amd64/driver.sys' on AMD64 target.
+#
+# To use differente prebuild on differente OSes use .section syntax
+# (see below for .section example).
+#
+
+PREBUILD_PROGS =
+PREBUILD_LIBS  =
+
+#
+# Path where to find external headers. OPTIONAL.
+#
+
+INCLUDE =
+
+#
+# Defines for C/C++ preprocessor. If specified inside root component
+# (PROJECT type) all components will inherit it recursively.
+# We can use it for example to enable DEBUG flag in whole project.
+# OPTIONAL.
+#
+
+#DEFINES = -DDEBUG -DDEBUG_LEVEL=3
+
+#
+# List of libraries to link. OPTIONAL.
+#
+
+LIBS = -static -lfile-static -lstr-static -largs-static -ldebug-static
+
+#
+# Used license (GPL, BSD, Commercial etc.).
+# OPTIONAL. If skipped will be defaulted to 'Unknown' keyword.
+#
+
+LICENSE = GPL
+
+#
+# List of author(s). OPTIONAL.
+# If skipped will be deafulted to 'Unknown' keyword.
+#
+
+AUTHOR = Sylwester Wysocki <sw143@wp.pl>
+
+#
+# Short list, what does component do and why we need it.
+# Used by auto-documentation tools. OPTIONAL.
+#
+
+PURPOSE  = Convert platform independend 'qcbuild.src' file(s)
+PURPOSE += into script(s) ready to build project on target platform.
+PURPOSE += Ships auto-documentation tool.
+
+#
+# Longer description for auto-documentation tools. OPTIONAL.
+#
+
+DESC  = -
+
+#
+# List of another components (inside project), which MUST be
+# built before this one. Needed to resolve dependencies while
+# generating main Build/Clean scripts and by auto-documentation
+# tools.
+# MUST set if any dependencies exist.
+#
+
+DEPENDS = LibFile LibStr LibDebug LibArgs
+
+#
+# QT Specific. Optionals.
+#
+
+QT_HEADERS  =
+QT_FORMS    =
+QT_MODULES  =
+LIBS       +=
+
+#
+# Platform specific variables. OPTIONAL.
+# If one of above variables is platform specific we can:
+#
+# - redefine it by '=' operator (old value will be overwritten).
+#
+# - expand existing value by '+=' operator. E.g. we can add '-ldl'
+#   to LIBS only on Linux platform.
+#
+
+.section Linux
+.endsection
+
+.section MacOS
+.endsection
+
+.section MinGW
+.endsection
+
+.section iOS
+.endsection
+
+.section Android
+.endsection
+
+#
+# Multiple OS section example.
+#
+
+.section iOS, MacOS, MinGW
+.endsection

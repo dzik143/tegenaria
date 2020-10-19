@@ -1,0 +1,3 @@
+Sylwester Wysocki <sw143@wp.pl>
+Lukasz Bienczyk <lukasz.bienczyk@gmail.com> - LibLock, LibProcess, LibThread
+Radoslaw Kolodziejczyk <radek.kolodziejczyk@gmail.com> - LibLock, LibProcess, LibThread

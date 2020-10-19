@@ -1,0 +1,184 @@
+I. Init
+=======
+
+  Call DBG_INIT or DBG_INIT_EX at startup.
+
+  If not called:
+
+  - Log fd defaulted to stderr
+  - Log level defaulted to DBG_LEVEL_DEFAULT (see Debug.h)
+
+  TIP#1: You can adjust extra features by setting flags parameter
+         to DBG_INIT_EX. See Debug.h for possible values.
+
+  Examples:
+
+    DBG_INIT("dirligo.log")
+    DBG_INIT_EX(NULL, "debug3", -1)
+    DBG_INIT_EX("dirligo.log", DBG_LEVEL_INFO, DBG_STATE_ENABLE)
+
+II. System error codes
+======================
+
+  GetLastError() can be used:
+
+  - Returns native GetLastError() on Windows.
+  - Returns errno value on Linux.
+
+  No #ifdef needed.
+
+III. Tracing code
+=================
+
+  Use DBG_ENTER or DBG_ENTER_EX to mark begin of function calls.
+  Use DBG_LEAVE to mark end of function calls.
+
+  TIP#1: DBG_ENTER2, DBG_ENTER3 etc. are enabled under DEBUG2, DEBUG3 levels
+         only. Use them to avoid flooding log with a lot of enter/leaves
+         messages if one of function is called very often.
+
+IV. Log levels
+==============
+
+  Defined in Debug.h.
+
+  To set log level at init use DBG_INIT_EX at startup.
+
+  To set log level after init use DBG_SET_LEVEL or DBG_INIT_EX with
+  DBG_REINIT flag.
+
+  Level name       | Enabled macros
+  =================+===================================================
+  DBG_LEVEL_NONE   | Fatal quits without message
+  -----------------+---------------------------------------------------
+  DBG_LEVEL_ERROR  | Error, Fatal
+  -----------------+---------------------------------------------------
+  DBG_LEVEL_INFO   | DBG_INFO, DBG_HEAD
+  -----------------+---------------------------------------------------
+  DBG_LEVEL_DEBUG1 | DEBUG1, DBG_MSG, DBG_MSG1, DBG_HEAD1, DBG_ENTER,
+                   | DBG_ENTER1, DBG_LEAVE, DBG_LEAVE1
+  -----------------+---------------------------------------------------
+  DBG_LEVEL_DEBUG2 | DEBUG2, DBG_MSG2, DBG_HEAD2, DBG_ENTER2, DBG_LEAVE2
+  -----------------+---------------------------------------------------
+  DBG_LEVEL_DEBUG3 | DEBUG3, DBG_MSG3, DBG_HEAD3 DBG_ENTER3, DBG_LEAVE3
+  -----------------+---------------------------------------------------
+  DBG_LEVEL_DEBUG4 | DEBUG4, DBG_MSG4, DBG_HEAD4 DBG_ENTER4, DBG_LEAVE4
+  -----------------+---------------------------------------------------
+  DBG_LEVEL_DEBUG5 | DEBUG5, DBG_MSG5, DBG_HEAD5 DBG_ENTER5, DBG_LEAVE5
+                   | DBG_DUMP
+
+V. Monitoring process resources
+===============================
+
+  1. To enable state monitor init log using DBG_INIT_EX with
+     DBG_STATE_ENABLE flag.
+
+  2. To add/delete resources to monitor use DBG_SET_XXX marcos.
+
+     DBG_SET_ADD  - add object to monitor
+     DBG_SET_DEL  - remove object from monitor
+     DBG_SET_MOVE - move object from one set to another (e.g. move
+                    mutex from locking to locked).
+
+     Example: See example02-monitor.
+
+  TIP#1: You can assign arbitar names to object ID to debug code easier.
+         To do it see at:
+
+         DBG_SET_ADD_EX - Add named object to monitor
+         DBG_SET_RENAME - Rename anonymous object or change existing one
+
+VI. Monitoring I/O activity
+===========================
+
+  1. To enable I/O logs use DBG_IO_ENABLE flag in DBG_INIT_EX.
+
+  2. I/O log is written to *.io.<pid>.log file.
+
+  3. To monitor I/O use DBG_IO_XXX macros:
+
+     DBG_IO_WRITE_BEGIN(TYPE, ID, BUF, COUNT)
+     DBG_IO_WRITE_END(TYPE, ID, BUF, COUNT)
+
+     DBG_IO_READ_BEGIN(TYPE, ID, BUF, COUNT)
+     DBG_IO_READ_END(TYPE, ID, BUF, COUNT)
+
+     DBG_IO_CLOSE_BEGIN(TYPE, ID)
+     DBG_IO_CLOSE_END(TYPE, ID)
+
+     where TYPE is arbirtar string e.g. "socket".
+
+  4. Examples:
+
+     //
+     // Write some data to FD.
+     //
+
+     DBG_IO_WRITE_BEGIN("fd", fd, buf, count);
+     written = write(fd, buf, count);
+     DBG_IO_WRITE_END("fd", fd, buf, written);
+
+     //
+     // Read some data from socket.
+     //
+
+     DBG_IO_READ_BEGIN("socket", sock, buf, count);
+     readed = recv(sock, buf, count, 0);
+     DBG_IO_READ_END("fd", fd, buf, readed);
+
+     //
+     // Close stdio file.
+     //
+
+     DBG_IO_CLOSE_BEGIN("FILE*", f);
+     fclose(f);
+     DBG_IO_CLOSE_END("FILE*", f);
+
+     See example04-io for full working code.
+
+VII. Catching errors
+====================
+
+  You can use *FAIL* family macros:
+
+  FAIL(X)        - if X true jump to fail
+  FAILEX(X, ...) - if X true write formatted messages at DBG_LEVEL_ERROR
+                   and jump to fail
+
+
+  TIP#1: FAIL and FAILEX does NOT affect OS error code.
+         You can catch it just after fail label.
+
+  Example:
+
+  {
+    int exitCode = -1;
+
+    ...
+
+    FAIL(write(fd, buf, count) < 0);
+
+    FAILEX(ptr == NULL, "ERROR: Ptr cannot be NULL.");
+
+    ...
+
+    //
+    // Error handler.
+    //
+
+    exitCode = 0;
+
+    fail:
+
+    if (exitCode)
+    {
+      //
+      // We fall here if function fail in middle.
+      //
+
+      Error("Fail with code : %d.\n", GetLastError());
+    }
+
+    ...
+  }
+

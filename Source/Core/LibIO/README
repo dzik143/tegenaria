@@ -1,0 +1,123 @@
+-------------------------------------------------------------------------------
+-                                                                             -
+-                                 IOFifo class                                -
+-                                                                             -
+------------------------------------------------------------------------------- 
+
+I. Cyclic buffer to storing I/O data.
+   Incoming data is appended to the end of buffer.
+   Outcoming data is popped from the begin of buffer.
+   (First in first out order).
+
+          xx xx xx xx xx xx xx ... yy yy yy yy yy 
+ 
+          ^^^                                 ^^^
+      Read position.                     Write position.
+      Pop data from here.                Push data here.
+      (Begin of buffer)                  (End of buffer).
+      
+II. Read/write
+==============
+
+  To add data to FIFO use push().
+  To pop data from FIFO use pop().
+  To eat data (pop, but don't write anywhere) use eat().
+
+III. Multithread
+================
+
+  IOFifo is NOT thread safe itself.
+  Use lock() and unlock() to synchronize access from many threads.
+
+-------------------------------------------------------------------------------
+-                                                                             -
+-                               IOMixer class                                 -
+-                                                                             -
+-------------------------------------------------------------------------------
+
+IOMixer to multiplex one master connection into many slave channels.
+
+I. Master thread:
+=================
+
+  One IOMixer = one master thread = one IOMixer::masterLoop().
+  
+           / [slave1/IN] - ...
+  [Master] - [slave2/IN] - ...
+           \ [slave3/IN] - ...
+
+
+  Master loop does:
+  -----------------
+  
+    1. Read <id><len><data> packet from master.
+    2. Send <len> bytes of <data> to slave with ID <id>.
+ 
+  
+                                                       <data1> -> slave1/IN
+                                                     / 
+  master/OUT -> <1><len1><data1><2><len2><data2> ... -> <data2> -> slave2/IN
+                                                     \ 
+                                                       ...
+                                                      
+  Master loop is created in IOMixer::start().
+  Master loop is deleted in IOMixer::stop().
+  
+  
+II. Slave threads:
+==================
+
+  One IOMixer = many slaves threads = many IOMixer::slaveLoop().
+  
+  ... -> [slave1/OUT] \
+  ... -> [slave2/OUT] -> [Master/IN] ->
+  ... -> [slave3/OUT] /
+  
+  Slave loop does:
+  ----------------
+  
+  1. Read <data> from slave with given <id>.
+  2. Write <id><len><data> to master.
+  
+  
+  Slave1/OUT -> <data1>
+                        \
+  Slave2/OUT -> <data2> -> <1><len1><data1> <2><len2><data2> ... -> master/IN
+                        /
+                    ...
+  
+  
+  Slave thread is created in IOMixer::addSlave(...)
+  Slave thread is deleted in IOMixer::removeSlave(..)
+  
+
+III. Slave IDs:
+===============
+
+  Slave 0         : Reserved for internal IOMixer usage.
+  Slave 1, 2, ... : Created by caller in IOMixer::addSlave().
+  
+
+IV. EOF packets:
+================
+
+  Used internally by IOMixer only.
+
+  Zero length data means EOF, i.e. packet <id><0>.
+
+  If slave loop received EOF it means slave with given <id> is dead
+  and should be shutted down.
+
+  EOF on slave ID#0 is reserved for master EOF.
+  It signal to shutdown whole connection.
+
+
+VI. Shutdown protocol:
+======================
+  
+  1. Send EOF for every slaves, i.e. <id><0>.
+  2. Send master EOF, i.e. <0><0>.
+  3. Wait for master EOF from remote or connection broken.
+  
+  Implemented in IOMixer::shutdown().
+  Called internally from destructor.

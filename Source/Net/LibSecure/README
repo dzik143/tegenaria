@@ -1,0 +1,49 @@
+-------------------------------------------------------------------------------
+
+                                Secure connection
+
+-------------------------------------------------------------------------------
+
+1. Init
+-------
+
+1. To wrap existing non-encrypted connection into encrypted one (TLS) use
+   one of SecureConnectionCreate() functions family.
+
+  Input non-encrypted connection can be defined as:
+  - FD pair
+  - socket
+  - {read, write} callbacks
+  
+
+2. To start TLS session:
+------------------------
+
+   Server needs:
+   - certificate file (cert parameter) 
+   - private key file (privKey paramter)
+   
+   Client needs:
+   - nothing (cert and privKey parameters should be NULL)
+   
+
+3. Server skeleton code:
+------------------------
+
+   sc = SecureConnectionCreate(SECURE_INTENT_SERVER, ..., cert, privateKey);
+
+   sc -> read(...);
+   sc -> write(...);   
+   
+   sc -> release();
+   
+
+4. Client skeleton code:
+------------------------
+
+   sc = SecureConnectionCreate(SECURE_INTENT_CLIENT, ..., NULL, NULL);
+   
+   sc -> write(...);
+   sc -> read(...);
+   
+   sc -> release();

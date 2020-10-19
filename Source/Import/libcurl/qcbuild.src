@@ -1,0 +1,63 @@
+################################################################################
+#                                                                              #
+#  Copyright (c) 2010, 2014 Sylwester Wysocki <sw143@wp.pl>                    #
+#                                                                              #
+#  Permission is hereby granted, free of charge, to any person obtaining a     #
+#  copy of this software and associated documentation files (the "Software"),  #
+#  to deal in the Software without restriction, including without limitation   #
+#  the rights to use, copy, modify, merge, publish, distribute, sublicense,    #
+#  and/or sell copies of the Software, and to permit persons to whom the       #
+#  Software is furnished to do so, subject to the following conditions:        #
+#                                                                              #
+#  The above copyright notice and this permission notice shall be included in  #
+#  all copies or substantial portions of the Software.                         #
+#                                                                              #
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR  #
+#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,    #
+#  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL     #
+#  THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER  #
+#  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING     #
+#  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER         #
+#  DEALINGS IN THE SOFTWARE.                                                   #
+#                                                                              #
+################################################################################
+
+TYPE = LIBRARY
+
+TITLE = libcurl
+
+#
+# Headers.
+#
+
+ISRC = curl
+
+
+#
+# List of prebuild libraries to copy into Build dir.
+# $(ARCH) keywords will be set to i386 or amd64 depending on
+# detected/set target.
+#
+
+.section Linux
+.endsection
+
+.section MinGW
+  PREBUILD_LIBS  = Prebuild/Win/i386/libcurl-4.dll
+  PREBUILD_LIBS += Prebuild/Win/i386/libcurl.a
+.endsection
+
+#
+# Info about license and auhtors.
+#
+
+LICENSE    = X11
+AUTHOR     = Daniel Stenberg
+COPYRIGHT  = Copyright (C) 1998 - 2012, Daniel Stenberg
+
+#
+# Description, purpose.
+#
+
+PURPOSE = High level HTTP, FTP protocols.
+DESC    = Prebuild only.

@@ -1,0 +1,52 @@
+1. Init
+-------
+
+  To wrap existing FDs pair or socket connected to SFTP server
+  create new SftpClient object.
+     
+  SftpClient *sftp = new SftpClient(fdin, fdout);
+     
+  sftp -> connect();
+  
+  ... some work here ...
+     
+  delete sftp;
+  
+
+2. Synchronous requests (low-level API)  
+---------------------------------------
+
+  Below methods maps to related basic SFTP requests:
+  
+  SSH2_FXP_OPEN     |-> sftp -> open()
+  SSH2_FXP_CLOSE    |-> sftp -> close()
+  SSH2_FXP_READ     |-> sftp -> read()
+  SSH2_FXP_WRITE    |-> sftp -> write()
+  SSH2_FXP_OPENDIR  |-> sftp -> opendir()
+  SSH2_FXP_READDIR  |-> sftp -> readiir()
+  SSH2_FXP_REMOVE   |-> sftp -> remove()
+  SSH2_FXP_MKDIR    |-> sftp -> mkdir()
+  SSH2_FXP_RMDIR    |-> sftp -> rmdir()
+  SSH2_FXP_STAT     |-> sftp -> stat()
+  SSH2_FXP_RENAME   |-> sftp -> rename()
+  
+3. Asynchronous requests (high-level API)
+-----------------------------------------
+
+  There high-level API on top of basic SFTP requests from [2] to run SFTP job
+  asynchronous in background threads.
+  
+  A. Download job: sftp -> downloadFile(..., callback)
+  B. Upload job:   sftp -> uploadFile(..., callback)
+  C. List job:     sftp -> listFiles(..., callback)
+  
+  Callback function is called when:
+  
+  - job changed its states (e.g. job finished or error occured)
+  - new transfer statistics arrived (upload/download jobs)
+  - new portion of file list arrived (list job)
+  
+  To cancel pending job use job -> cancel() method.
+  
+  WARNING: All SftpJob objects MUSTS be freed by job -> release() when no
+  needed longer.

@@ -1,0 +1,9 @@
+Autodoc:
+--------
+
+- Fix handling constructors and destructors in autodoc.
+
+Makefile generation:
+--------------------
+
+- Detect properly qt libs from QT_MODULES.
