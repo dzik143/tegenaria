@@ -1,7 +1,7 @@
-# Tegenaria - C++ utils library
+# Tegenaria - OS independent utils for C++
 - Set of C++ libraries,
 - Should works on Windows 32/64, Linux and MacOS,
-- MIT license - use for any purpose if you want (including commercial usage).
+- MIT license - use for any purpose (including commercial).
 
 # Build (Windows 32/64)
   1. Install [MinGW](http://www.mingw.org/)
