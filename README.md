@@ -1,7 +1,7 @@
-# [ARCHIVE] Tegenaria - C++ utils library
-- Archival set of C++ libraries used in my **OLDER** projects,
-- **NOT** maintained anymore (including bug fixes),
-- MIT license - use for any purpose if you want.
+# Tegenaria - C++ utils library
+- Set of C++ libraries,
+- Should works on Windows 32/64, Linux and MacOS,
+- MIT license - use for any purpose if you want (including commercial usage).
 
 # Build (Windows 32/64)
   1. Install [MinGW](http://www.mingw.org/)
@@ -20,3 +20,29 @@
   ./qcbuild
   ./Build.sh
   ```
+  
+# Overview
+  - Core:
+    - [LibArgs](Source/Core/LibArgs) - argv[] parser driven by **CONFIG TABLE**,
+    - [LibDebug](Source/Core/LibDebug) - logs and debug helper, **RESOURCE MONITOR**, which tracks used resources (files, sockets, mutexes etc.) in human-readable file and updates it on-the-fly,
+    - [LibFile](Source/Core/LibFile) - OS independent **FILE** functions (open/read/write, read content at-once, temporary files, [transactional/atomic write](https://en.wikipedia.org/wiki/Database_transaction) etc.)
+    - [LibIO](Source/Core/LibIO) - high-level **I/O routines** with built-in timeout functionality, abstract I/O constructs: **IO FIFO**, **IO Loop**, **IO Multiplexer**,
+    - [LibIpc](Source/Core/LibIpc) - **INTER-PROCESS COMUNICATION** (IPC) using [Named Pipe](https://docs.microsoft.com/en-us/windows/win32/ipc/named-pipes) (Windows) or [local socket](https://opensource.com/article/19/4/interprocess-communication-linux-networking) (Linux/MacOS),
+    - [LibJob](Source/Core/LibJob) - abstract Job queue and synchronization schemes,
+    - [LibLock](Source/Core/LibLock) - OS independent **SYNCHRONIZATION** (mutexes and semaphores),
+    - [LibObject](Source/Core/LibObject) - base C++ object scheme with thread-safe **REFERENCE COUNTER**,
+    - [LibProcess](Source/Core/LibProcess) - OS independent **PROCESS** management (create, wait, kill, etc.),
+    - [LibReg](Source/Core/LibProcess) - high-level **WINDOWS REGISTRY** management (Windows only),
+    - [LibService)(Source/Core/LibService) - high-level routines to manage **WINDOWS SERVICES**,
+    - [LibSSMap](Source/Core/LibSSMap) - String-to-String dictionary class, often used to read/write **CONFIGURATION FILES**,
+    - [LibStr](Source/Core/LibStr) - **STRING** and **RAW BUFFER** helpers,
+    - [LibSystem](Source/Core/LibSystem) - helpers to read **SYSTEM DATA** such as OS version, amount of free memory, supported CPU instructions etc.,
+    - [LibThread](Source/Core/LibThread) - OS independent **THREAD** management (create, wait, kill, etc.),
+    - [LibVariant](Source/Core/LibVariant) - implementation of **VARIANT TYPE** with operator overloading (add, sub, div etc.),
+              
+  - Net:
+    - [LibCGI](Source/Net/LibCGI) - C++ wrappers for [Common Gateway Interface](https://pl.wikipedia.org/wiki/Common_Gateway_Interface) (CGI) interface,
+    - [LibCGI](Source/Net/LibNet) - middle-level **NETWORK** related functions (TCP client, thread callback-based server, [epool](https://en.wikipedia.org/wiki/Epoll), [IO Completion Ports](https://docs.microsoft.com/en-us/windows/win32/fileio/i-o-completion-ports)),
+    - [LibNetEx](Source/Net/LibNetEx) - high-level network related functions,
+    - [LibSecure](Source/Net/LibSecure) - **SECURITY** related ([SSL/TLS](https://pl.wikipedia.org/wiki/Transport_Layer_Security), encryption, random numbers), needs [OpenSSL](https://www.openssl.org/) to work,
+    - [LibSftp](Source/Net/LibSftp) - OS independent [SFPT](https://pl.wikipedia.org/wiki/SSH_File_Transfer_Protocol) client library.
