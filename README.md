@@ -15,7 +15,7 @@
     - [LibObject](Source/Core/LibObject) - base C++ object scheme with thread-safe **REFERENCE COUNTER**,
     - [LibProcess](Source/Core/LibProcess) - OS independent **PROCESS** management (create, wait, kill, etc.),
     - [LibReg](Source/Core/LibProcess) - high-level **WINDOWS REGISTRY** management (Windows only),
-    - [LibService)(Source/Core/LibService) - high-level routines to manage **WINDOWS SERVICES**,
+    - [LibService](Source/Core/LibService) - high-level routines to manage [WINDOWS SERVICES](https://docs.microsoft.com/en-us/dotnet/framework/windows-services/introduction-to-windows-service-applications),
     - [LibSSMap](Source/Core/LibSSMap) - String-to-String dictionary class, often used to read/write **CONFIGURATION FILES**,
     - [LibStr](Source/Core/LibStr) - **STRING** and **RAW BUFFER** helpers,
     - [LibSystem](Source/Core/LibSystem) - helpers to read **SYSTEM DATA** such as OS version, amount of free memory, supported CPU instructions etc.,
