@@ -1,7 +1,9 @@
-# Tegenaria - OS independent utils for C++
-- Set of C++ libraries,
+# [ARCHIVE/2014] Tegenaria - OS independent utils for C++
+- **ARCHIVAL** set of C++ utils,
+- developed mainly between 2010-2014,
+- code is **NOT** maintaned anymore (even for bug fixes),
 - Should works on Windows 32/64, Linux and MacOS,
-- MIT license - use for any purpose (including commercial).
+- **MIT LICENSE** - use for any purpose (including commercial).
   
 # Overview
   - Core:
