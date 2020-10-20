@@ -8,7 +8,7 @@
 # Overview
   - Core:
     - [LibArgs](Source/Core/LibArgs) - argv[] parser driven by **CONFIG TABLE**,
-    - [LibDebug](Source/Core/LibDebug) - logs and debug helper, **RESOURCE MONITOR**, which tracks used resources (files, sockets, mutexes etc.) in human-readable file and updates it on-the-fly,
+    - [LibDebug](Source/Core/LibDebug) - logs and debug helper, **RESOURCE MONITOR**, which tracks used resources (files, sockets, mutexes etc.) in human-readable file and updates this file at runtime,
     - [LibFile](Source/Core/LibFile) - OS independent **FILE** functions (open/read/write, read content at-once, temporary files, [transactional/atomic write](https://en.wikipedia.org/wiki/Database_transaction) etc.)
     - [LibIO](Source/Core/LibIO) - high-level **I/O routines** with built-in timeout functionality, abstract I/O constructs: FIFO, [circular buffer](https://en.wikipedia.org/wiki/Circular_buffer), IO Multiplexer,
     - [LibIpc](Source/Core/LibIpc) - **INTER-PROCESS COMUNICATION** (IPC) using [Named Pipe](https://docs.microsoft.com/en-us/windows/win32/ipc/named-pipes) (Windows) or [local socket](https://opensource.com/article/19/4/interprocess-communication-linux-networking) (Linux/MacOS),
