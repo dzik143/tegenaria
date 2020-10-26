@@ -3,7 +3,7 @@
 - developed mainly between **2010-2014**,
 - still used within some **OLDER** projects, but **NOT** maintaned anymore (even for bug fixes),
 - Should works on Windows 32/64, Linux and MacOS,
-- **MIT LICENSE** - use for any purpose (including commercial).
+- **MIT LICENSE** - use for any purpose (including commercial) as long as you keep copyright notice,
   
 # Overview
   - Core:
